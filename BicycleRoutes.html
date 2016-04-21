@@ -9,31 +9,31 @@
 </head>
 <body>
     <div id="map"></div>
-    <form>
+    <form id="chooseRoutes">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
                     <label class="form-control-label">Type de voie cyclable</label>
                     <div class="radio">
-                        <label><input type="radio" name="optWayType">Chaussée désignée</label>
+                        <label><input type="radio" name="optWayType" value="1" required>Chaussée désignée</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optWayType">Accotement asphalté</label>
+                        <label><input type="radio" name="optWayType" value="2">Accotement asphalté</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optWayType">Bande cyclable</label>
+                        <label><input type="radio" name="optWayType" value="3">Bande cyclable</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optWayType">Piste cyclable sur rue</label>
+                        <label><input type="radio" name="optWayType" value="4">Piste cyclable sur rue</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optWayType">Piste cyclable en site propre</label>
+                        <label><input type="radio" name="optWayType" value="5">Piste cyclable en site propre</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optWayType">Piste cyclable au niveau du trottoir</label>
+                        <label><input type="radio" name="optWayType" value="6">Piste cyclable au niveau du trottoir</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optWayType">Sentier polyvalent</label>
+                        <label><input type="radio" name="optWayType" value="7">Sentier polyvalent</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -41,23 +41,23 @@
                         Type de voie cyclable particulière
                     </label>
                     <div class="radio">
-                        <label><input type="radio" name="optSpecWayType">Une seule bande cyclable à contre sens</label>
+                        <label><input type="radio" name="optSpecWayType" value="30" required>Une seule bande cyclable à contre sens</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optSpecWayType">Bande cyclable à contre sens et chaussée désignée</label>
+                        <label><input type="radio" name="optSpecWayType" value="31">Bande cyclable à contre sens et chaussée désignée</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optSpecWayType">Bande cyclable et bande cyclable à contre sens</label>
+                        <label><input type="radio" name="optSpecWayType" value="33">Bande cyclable et bande cyclable à contre sens</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optSpecWayType">Bande cyclable en heure de pointe</label>
+                        <label><input type="radio" name="optSpecWayType" value="34">Bande cyclable en heure de pointe</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <label class="form-control-label">
                         Longueur en mètre
                     </label>
-                    <input type="text" class="form-control" />
+                    <input type="number" class="form-control" id="routeLength" required/>
                 </div>
             </div>
             <div class="row">
@@ -66,10 +66,10 @@
                         Nombre de voie cyclable
                     </label>
                     <div class="radio">
-                        <label><input type="radio" name="optNumberLane">Unidirectionnel</label>
+                        <label><input type="radio" name="optNumberLane" value="1" required>Unidirectionnel</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optNumberLane">Bidirectionnel</label>
+                        <label><input type="radio" name="optNumberLane" value="2">Bidirectionnel</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -77,19 +77,19 @@
                         Type de séparateur qui identifie la voie cyclable
                     </label>
                     <div class="radio">
-                        <label><input type="radio" name="optSeparator">Mail</label>
+                        <label><input type="radio" name="optSeparator" value="M" required>Mail</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optSeparator">Délinéateur</label>
+                        <label><input type="radio" name="optSeparator" value="D">Délinéateur</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optSeparator">Marquage au sol</label>
+                        <label><input type="radio" name="optSeparator" value="P">Marquage au sol</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optSeparator">Clôture</label>
+                        <label><input type="radio" name="optSeparator" value="C">Clôture</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optSeparator">Jersey</label>
+                        <label><input type="radio" name="optSeparator" value="J">Jersey</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -97,19 +97,21 @@
                         Fait parti du réseau accessible 4 saisons
                     </label>
                     <div class="radio">
-                        <label><input type="radio" name="optAllSeason">Oui</label>
+                        <label><input type="radio" name="optAllSeason" value="OUI" required>Oui</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" name="optAllSeason">Non</label>
+                        <label><input type="radio" name="optAllSeason" value="NON">Non</label>
                     </div>
                 </div>
             </div>
-            <input type="submit" class="btn btn-primary"/>
+            <input type="submit" class="btn btn-primary" />
         </div>
     </form>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/reseaucyclable201511.js"></script>
     <script src="js/main.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initMap" ></script>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initMap"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>
