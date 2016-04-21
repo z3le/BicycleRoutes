@@ -1,0 +1,14 @@
+html, body {
+    height: 100%;
+    margin: 0 auto;
+}
+
+#map {
+    height: 50%;
+    width: 80%;
+    margin: 0.5em auto;
+}
+
+form {
+    padding-top: 1.6em;
+}
