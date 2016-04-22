@@ -31,8 +31,6 @@ function initMapTest(chosenRouteId) {
      });
 
      for (i = 0; i < locations.length; i++) {
-         console.log(locations[i][0]);
-         console.log(locations[i][1]);
          marker = new google.maps.Marker({
              position: new google.maps.LatLng(locations[i][1], locations[i][0]),
              map: map
