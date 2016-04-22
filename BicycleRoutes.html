@@ -5,10 +5,16 @@
     <meta charset="utf-8" />
     <title>Bicycle routes Montreal</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/dt/dt-1.10.11/datatables.min.css" />
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-    <div id="map"></div>
+    <div id="map" style="float:left; padding:20px"></div>
+    <div>
+        Resultats
+        <table id="resultTable" class="display" width="100%"></table>
+    </div>
+    
     <form id="chooseRoutes">
         <div class="container">
             <div class="row">
@@ -107,7 +113,9 @@
             <input type="submit" class="btn btn-primary" />
         </div>
     </form>
+   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/t/dt/dt-1.10.11/datatables.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/reseaucyclable201511.js"></script>
     <script src="js/main.js"></script>

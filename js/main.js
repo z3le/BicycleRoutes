@@ -5,12 +5,28 @@
         try {
 
             var filteredRoutes = routes.filter(getFilteredRoutes(bindRouteFilter()));
-            initMapTest(filteredRoutes[0]);
+            initMapTest(filteredRoutes);
         } catch (e) {
             console.log(e);
         }
         event.preventDefault();
     });
+
+    //var table = $('#resultTable').DataTable();
+
+    //$('#resultTable tbody').on('click', 'tr', function () {
+    //    if ($(this).hasClass('selected')) {
+    //        $(this).removeClass('selected');
+    //    }
+    //    else {
+    //        table.$('tr.selected').removeClass('selected');
+    //        $(this).addClass('selected');
+    //    }
+    //});
+
+    //$('#button').click(function () {
+    //    table.row('.selected').remove().draw(false);
+    //});
 });
 
 function initMap() {
@@ -29,6 +45,7 @@ function initMapTest(tempObject) {
     });
     var value = routes[0];
     map.data.addGeoJson(value);
+    bindDataTable(tempObject);
 }
 
 function bindRouteFilter() {
@@ -53,12 +70,37 @@ function bindRouteFilter() {
 }
 
 function getFilteredRoutes(routeFilter) {
+    var value = routeFilter;
+  
     return function (element) {
-        return element.properties.TYPE_VOIE === routeFilter.WayType &&
-            element.properties.TYPE_VOIE2 === routeFilter.SpecialWayType &&
-            element.properties.NBR_VOIE === routeFilter.NumberLane &&
-            element.properties.SEPARATEUR === routeFilter.Separator &&
-            element.properties.SAISONS4 === routeFilter.AllSeason &&
-            element.properties.LONGUEUR >= routeFilter.RouteLength;
+        var value2 = element;
+        return element.properties.TYPE_VOIE == routeFilter.WayType &&
+            element.properties.TYPE_VOIE2 == routeFilter.SpecialWayType &&
+            element.properties.NBR_VOIE == routeFilter.NumberLane &&
+            element.properties.SEPARATEUR == routeFilter.Separator &&
+            element.properties.SAISONS4 == routeFilter.AllSeason ;
     }
+}
+
+function bindDataTable(tempObject) {
+    var flattenedRoutes = new Array();
+    var selected = false;
+
+    for (var i = 0; i < tempObject.length; i++) {
+        var currentObj = new Array();
+        currentObj.push(tempObject[i].properties.ID,
+            tempObject[i].properties.LONGUEUR,
+            tempObject[i].properties.NOM_ARR_VI)
+        flattenedRoutes.push(currentObj);
+    }
+
+    var value = JSON.stringify(flattenedRoutes);
+    $('#resultTable').DataTable({
+        data: flattenedRoutes,
+        columns: [
+            { title: "Id" },
+            { title: "Longueur" },
+            { title: "Nome arrive" }
+        ]
+    });
 }
