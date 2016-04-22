@@ -1,51 +1,43 @@
-﻿$(document).ready(function () {
-    var routes = getBicycleRoutes();
+﻿var routes = getBicycleRoutes();
 
+$(document).ready(function () {
     $('#chooseRoutes').submit(function (event) {
         try {
-
             var filteredRoutes = routes.filter(getFilteredRoutes(bindRouteFilter()));
-            initMapTest(filteredRoutes);
+            bindDataTable(filteredRoutes);
         } catch (e) {
             console.log(e);
         }
         event.preventDefault();
     });
-
-    //var table = $('#resultTable').DataTable();
-
-    //$('#resultTable tbody').on('click', 'tr', function () {
-    //    if ($(this).hasClass('selected')) {
-    //        $(this).removeClass('selected');
-    //    }
-    //    else {
-    //        table.$('tr.selected').removeClass('selected');
-    //        $(this).addClass('selected');
-    //    }
-    //});
-
-    //$('#button').click(function () {
-    //    table.row('.selected').remove().draw(false);
-    //});
 });
 
 function initMap() {
+    var myLatLng = { lat: 45.5087, lng: -73.554 }
+
     var map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 45.5087, lng: -73.554 },
-        zoom: 10
+        zoom: 10,
+        center: myLatLng
     });
 }
 
-function initMapTest(tempObject) {
-    var image = "http://maps.google.com/mapfiles/ms/micons/blue.png";
-    var routes = getBicycleRoutes();
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 45.5087, lng: -73.554 },
-        zoom: 10
-    });
-    var value = routes[0];
-    map.data.addGeoJson(value);
-    bindDataTable(tempObject);
+function initMapTest(chosenRouteId) {
+    var chosenRoute = routes.filter(getRouteById(chosenRouteId));
+    var locations = chosenRoute[0].geometry.coordinates;
+
+     var map = new google.maps.Map(document.getElementById('map'), {
+         center: { lat: locations[0][1], lng: locations[0][0] },
+         zoom: 14
+     });
+
+     for (i = 0; i < locations.length; i++) {
+         console.log(locations[i][0]);
+         console.log(locations[i][1]);
+         marker = new google.maps.Marker({
+             position: new google.maps.LatLng(locations[i][1], locations[i][0]),
+             map: map
+         });
+     }
 }
 
 function bindRouteFilter() {
@@ -70,15 +62,18 @@ function bindRouteFilter() {
 }
 
 function getFilteredRoutes(routeFilter) {
-    var value = routeFilter;
-  
     return function (element) {
-        var value2 = element;
         return element.properties.TYPE_VOIE == routeFilter.WayType &&
             element.properties.TYPE_VOIE2 == routeFilter.SpecialWayType &&
             element.properties.NBR_VOIE == routeFilter.NumberLane &&
             element.properties.SEPARATEUR == routeFilter.Separator &&
-            element.properties.SAISONS4 == routeFilter.AllSeason ;
+            element.properties.SAISONS4 == routeFilter.AllSeason;
+    }
+}
+
+function getRouteById(routeId) {
+    return function (element) {
+        return element.properties.ID == routeId;
     }
 }
 
@@ -96,11 +91,32 @@ function bindDataTable(tempObject) {
 
     var value = JSON.stringify(flattenedRoutes);
     $('#resultTable').DataTable({
+        "searching": false,
+        destroy: true,
         data: flattenedRoutes,
         columns: [
             { title: "Id" },
             { title: "Longueur" },
             { title: "Nome arrive" }
+        ],
+        columnDefs: [
+           {
+               "targets": [0],
+               "visible": false
+           }
         ]
+    });
+
+    $('#resultTable tbody').on('click', 'tr', function () {
+        var table = $('#resultTable').DataTable();
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+        var data = table.row(this).data();
+        initMapTest(data[0]);
     });
 }
